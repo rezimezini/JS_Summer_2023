@@ -1,0 +1,1 @@
+console.log("This language is nice !");
