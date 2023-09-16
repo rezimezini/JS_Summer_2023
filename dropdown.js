@@ -1,20 +1,27 @@
 const { expect } = require("chai");
+const moment = require("moment/moment");
 
 describe ('dropdown', ()=> {
   
-    it('Verify the current date is select by default in Sign Up dropdown',async ()=>{
+    it.only('Verify the current date is select by default in Sign Up dropdown',async ()=>{
        //1.Launch facebook.com 
        await browser.url('https://www.facebook.com/'); 
        await browser.pause(2000);
        await browser.maximizeWindow();
+       
        //2.Click on Create New Account button
       const clickOnCreateAccount= await $ ('//*[@data-testid="open-registration-form-button"]');
       await clickOnCreateAccount.click();
+
       //.3 Verify current date is displayed
-      const dateDisplayed=await $('select[aria-label=Day]').waitForDisplayed({timeout:3000});
+
+      //const monthYear = moment().format('MMMM YYYY');
+      const dateDisplayed = moment().format('D');
+  
+      const currentDate= await $('select[aria-label=Day]').waitForDisplayed({timeout:3000});
+      await $('select[aria-label=Day]').isDisplayed(dateDisplayed);
       
-      
-      expect(dateDisplayed,'Current date is not displayed').to.be.true;
+      expect(currentDate,'Current date is not displayed').to.be.true;
       await browser.pause(2000);
 
 
@@ -22,7 +29,7 @@ describe ('dropdown', ()=> {
 
       })
       
-      it.only('Verify the travelers count on homepage',async ()=>{
+      it('Verify the travelers count on homepage',async ()=>{
         //1.Launch hotels.com 
         await browser.url('https://www.hotels.com/');
         await browser.pause(2000);
